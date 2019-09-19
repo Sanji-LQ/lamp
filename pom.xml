@@ -11,6 +11,10 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
+  <modules>
+    <module>wifi</module>
+  </modules>
+
   <groupId>com.vip</groupId>
   <artifactId>lamp</artifactId>
   <version>1.0.0</version>

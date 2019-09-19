@@ -1,0 +1,24 @@
+spring:
+  thymeleaf:
+    # 默认就是template，修改才需要配置
+    prefix: classpath:/templates/
+    # 开发模式下要设置缓存为false，不然没法看到实时页面，上线要改回true
+    cache: false
+    suffix: .html
+    servlet:
+      content-type: text/html
+
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/wifi?serverTimezone=UTC&characterEncoding=utf8&useSSL=false
+
+mybatis-plus:
+  type-aliases-package: com.example.demofast.domian.entity
+  mapper-locations: classpath:/mappers/**/*.xml
+
+logging:
+  level:
+    com.example.demofast.mapper: debug
+

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vip.wifi.mapper.WifiMonitorMapper">
+  <resultMap id="BaseResultMap" type="com.vip.wifi.domain.entity.WifiMonitor">
+    <!--@mbg.generated-->
+    <id column="wm_id" jdbcType="INTEGER" property="wmId" />
+    <result column="current_time" jdbcType="TIMESTAMP" property="currentTime" />
+    <result column="down_stream_rate" jdbcType="INTEGER" property="downStreamRate" />
+    <result column="current_access_quantity" jdbcType="INTEGER" property="currentAccessQuantity" />
+    <result column="up_link_rate" jdbcType="INTEGER" property="upLinkRate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    wm_id, `current_time`, down_stream_rate, current_access_quantity, up_link_rate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from wifi_monitor
+    where wm_id = #{wmId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from wifi_monitor
+    where wm_id = #{wmId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="wm_id" keyProperty="wmId" parameterType="com.vip.wifi.domain.entity.WifiMonitor" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into wifi_monitor (`current_time`, down_stream_rate, current_access_quantity, 
+      up_link_rate)
+    values (#{currentTime,jdbcType=TIMESTAMP}, #{downStreamRate,jdbcType=INTEGER}, #{currentAccessQuantity,jdbcType=INTEGER}, 
+      #{upLinkRate,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="wm_id" keyProperty="wmId" parameterType="com.vip.wifi.domain.entity.WifiMonitor" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into wifi_monitor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="currentTime != null">
+        `current_time`,
+      </if>
+      <if test="downStreamRate != null">
+        down_stream_rate,
+      </if>
+      <if test="currentAccessQuantity != null">
+        current_access_quantity,
+      </if>
+      <if test="upLinkRate != null">
+        up_link_rate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="currentTime != null">
+        #{currentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="downStreamRate != null">
+        #{downStreamRate,jdbcType=INTEGER},
+      </if>
+      <if test="currentAccessQuantity != null">
+        #{currentAccessQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="upLinkRate != null">
+        #{upLinkRate,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vip.wifi.domain.entity.WifiMonitor">
+    <!--@mbg.generated-->
+    update wifi_monitor
+    <set>
+      <if test="currentTime != null">
+        `current_time` = #{currentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="downStreamRate != null">
+        down_stream_rate = #{downStreamRate,jdbcType=INTEGER},
+      </if>
+      <if test="currentAccessQuantity != null">
+        current_access_quantity = #{currentAccessQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="upLinkRate != null">
+        up_link_rate = #{upLinkRate,jdbcType=INTEGER},
+      </if>
+    </set>
+    where wm_id = #{wmId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vip.wifi.domain.entity.WifiMonitor">
+    <!--@mbg.generated-->
+    update wifi_monitor
+    set `current_time` = #{currentTime,jdbcType=TIMESTAMP},
+      down_stream_rate = #{downStreamRate,jdbcType=INTEGER},
+      current_access_quantity = #{currentAccessQuantity,jdbcType=INTEGER},
+      up_link_rate = #{upLinkRate,jdbcType=INTEGER}
+    where wm_id = #{wmId,jdbcType=INTEGER}
+  </update>
+</mapper>

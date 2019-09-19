@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vip.wifi.mapper.WifiDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.vip.wifi.domain.entity.WifiDetails">
+    <!--@mbg.generated-->
+    <id column="wd_id" jdbcType="INTEGER" property="wdId" />
+    <result column="wifi_id" jdbcType="INTEGER" property="wifiId" />
+    <result column="wm_id" jdbcType="INTEGER" property="wmId" />
+    <result column="wifi_properties_id" jdbcType="INTEGER" property="wifiPropertiesId" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    wd_id, wifi_id, wm_id, wifi_properties_id, is_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from wifi_details
+    where wd_id = #{wdId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from wifi_details
+    where wd_id = #{wdId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="wd_id" keyProperty="wdId" parameterType="com.vip.wifi.domain.entity.WifiDetails" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into wifi_details (wifi_id, wm_id, wifi_properties_id, 
+      is_delete)
+    values (#{wifiId,jdbcType=INTEGER}, #{wmId,jdbcType=INTEGER}, #{wifiPropertiesId,jdbcType=INTEGER}, 
+      #{isDelete,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="wd_id" keyProperty="wdId" parameterType="com.vip.wifi.domain.entity.WifiDetails" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into wifi_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wifiId != null">
+        wifi_id,
+      </if>
+      <if test="wmId != null">
+        wm_id,
+      </if>
+      <if test="wifiPropertiesId != null">
+        wifi_properties_id,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="wifiId != null">
+        #{wifiId,jdbcType=INTEGER},
+      </if>
+      <if test="wmId != null">
+        #{wmId,jdbcType=INTEGER},
+      </if>
+      <if test="wifiPropertiesId != null">
+        #{wifiPropertiesId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vip.wifi.domain.entity.WifiDetails">
+    <!--@mbg.generated-->
+    update wifi_details
+    <set>
+      <if test="wifiId != null">
+        wifi_id = #{wifiId,jdbcType=INTEGER},
+      </if>
+      <if test="wmId != null">
+        wm_id = #{wmId,jdbcType=INTEGER},
+      </if>
+      <if test="wifiPropertiesId != null">
+        wifi_properties_id = #{wifiPropertiesId,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where wd_id = #{wdId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vip.wifi.domain.entity.WifiDetails">
+    <!--@mbg.generated-->
+    update wifi_details
+    set wifi_id = #{wifiId,jdbcType=INTEGER},
+      wm_id = #{wmId,jdbcType=INTEGER},
+      wifi_properties_id = #{wifiPropertiesId,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=INTEGER}
+    where wd_id = #{wdId,jdbcType=INTEGER}
+  </update>
+</mapper>
