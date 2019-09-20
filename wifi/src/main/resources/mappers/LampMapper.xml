@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vip.wifi.mapper.LampMapper">
+  <resultMap id="BaseResultMap" type="com.vip.wifi.domain.entity.Lamp">
+    <!--@mbg.generated-->
+    <id column="lamp_id" jdbcType="INTEGER" property="lampId" />
+    <result column="lamp_name" jdbcType="VARCHAR" property="lampName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    lamp_id, lamp_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from lamp
+    where lamp_id = #{lampId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from lamp
+    where lamp_id = #{lampId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="lamp_id" keyProperty="lampId" parameterType="com.vip.wifi.domain.entity.Lamp" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into lamp (lamp_name)
+    values (#{lampName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="lamp_id" keyProperty="lampId" parameterType="com.vip.wifi.domain.entity.Lamp" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into lamp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lampName != null">
+        lamp_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lampName != null">
+        #{lampName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vip.wifi.domain.entity.Lamp">
+    <!--@mbg.generated-->
+    update lamp
+    <set>
+      <if test="lampName != null">
+        lamp_name = #{lampName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where lamp_id = #{lampId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vip.wifi.domain.entity.Lamp">
+    <!--@mbg.generated-->
+    update lamp
+    set lamp_name = #{lampName,jdbcType=VARCHAR}
+    where lamp_id = #{lampId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vip.wifi.mapper.KeyTableMapper">
+  <resultMap id="BaseResultMap" type="com.vip.wifi.domain.entity.KeyTable">
+    <!--@mbg.generated-->
+    <id column="kid" jdbcType="INTEGER" property="kid" />
+    <result column="key_name" jdbcType="VARCHAR" property="keyName" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    kt.key_name, vt.value
+  </sql>
+
+  <resultMap id="SelectValuesMap" type="com.vip.wifi.domain.vo.KeyTableVo"
+             extends="BaseResultMap">
+    <association property="valueTable" javaType="com.vip.wifi.domain.entity.ValueTable"
+                 resultMap="com.vip.wifi.mapper.ValueTableMapper.BaseResultMap"/>
+  </resultMap>
+
+  <select id="selectValues" resultMap="SelectValuesMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM key_table kt
+    left join value_table vt on kt.kid = vt.kid
+    WHERE INSTR ( CONCAT(',',
+                        (select wp.key_value_id
+                        from wifi_properties wp
+                        where wp.wifi_properties_id=#{wifiPropertiesId}),
+                        ','),
+    CONCAT(',', vt.vid, ',') )
+  </select>
+
+  <select id="selectValue" resultMap="SelectValuesMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM key_table kt
+    left join value_table vt on kt.kid = vt.kid
+    WHERE INSTR ( CONCAT(',',
+    (select w.value_id
+    from wifi w where w.wifi_id=#{wifiId}),
+    ','),
+    CONCAT(',', vt.vid, ',') )
+  </select>
+
+
+</mapper>

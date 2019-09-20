@@ -5,8 +5,6 @@
     <!--@mbg.generated-->
     <id column="wifi_id" jdbcType="INTEGER" property="wifiId" />
     <result column="lamp_id" jdbcType="INTEGER" property="lampId" />
-    <result column="your_region" jdbcType="VARCHAR" property="yourRegion" />
-    <result column="connection_status" jdbcType="INTEGER" property="connectionStatus" />
     <result column="wireless_status" jdbcType="INTEGER" property="wirelessStatus" />
     <result column="equipment_manufacturer" jdbcType="VARCHAR" property="equipmentManufacturer" />
     <result column="serial_number" jdbcType="VARCHAR" property="serialNumber" />
@@ -15,36 +13,39 @@
     <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime" />
     <result column="founder" jdbcType="VARCHAR" property="founder" />
     <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="value_id" jdbcType="VARCHAR" property="valueId" />
   </resultMap>
+
+  <resultMap id="wifiVoMap" type="com.vip.wifi.domain.vo.WifiVo" extends="BaseResultMap">
+    <association property="keyTableVoList" resultMap="com.vip.wifi.mapper.KeyTableMapper.SelectValuesMap"/>
+  </resultMap>
+
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    wifi_id, lamp_id, your_region, connection_status, wireless_status, equipment_manufacturer, 
-    serial_number, equipment_model, factory_time, creation_time, founder, is_delete
+    wifi_id, lamp_id, wireless_status, equipment_manufacturer, serial_number, equipment_model, 
+    factory_time, creation_time, founder, is_delete, value_id
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="wifiVoMap">
     <!--@mbg.generated-->
     select 
     <include refid="Base_Column_List" />
     from wifi
     where wifi_id = #{wifiId,jdbcType=INTEGER}
+    and is_delete=1
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--@mbg.generated-->
-    update  wifi  set is_delete=2
+    update wifi set is_delete=2
     where wifi_id = #{wifiId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="wifi_id" keyProperty="wifiId" parameterType="com.vip.wifi.domain.entity.Wifi" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into wifi (lamp_id, your_region, connection_status, 
-      wireless_status, equipment_manufacturer, 
-      serial_number, equipment_model, factory_time, 
-      creation_time, founder, is_delete
-      )
-    values (#{lampId,jdbcType=INTEGER}, #{yourRegion,jdbcType=VARCHAR}, #{connectionStatus,jdbcType=INTEGER}, 
-      #{wirelessStatus,jdbcType=INTEGER}, #{equipmentManufacturer,jdbcType=VARCHAR}, 
-      #{serialNumber,jdbcType=VARCHAR}, #{equipmentModel,jdbcType=VARCHAR}, #{factoryTime,jdbcType=DATE}, 
-      #{creationTime,jdbcType=TIMESTAMP}, #{founder,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER}
-      )
+  </update>
+  <insert id="insert" keyColumn="wifi_id" keyProperty="wifiId"  useGeneratedKeys="true">
+    insert into wifi
+    (wifi_id,lamp_id, equipment_manufacturer,
+      serial_number, equipment_model, factory_time,
+      value_id)
+    values
+    (#{wifi.wifiId},#{wifi.lampId}, #{wifi.equipmentManufacturer},
+      #{wifi.serialNumber}, #{wifi.equipmentModel}, #{wifi.factoryTime},
+      #{wifi.valueId})
   </insert>
-
 </mapper>

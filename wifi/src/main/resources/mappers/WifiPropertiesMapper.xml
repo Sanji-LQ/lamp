@@ -4,117 +4,42 @@
   <resultMap id="BaseResultMap" type="com.vip.wifi.domain.entity.WifiProperties">
     <!--@mbg.generated-->
     <id column="wifi_properties_id" jdbcType="INTEGER" property="wifiPropertiesId" />
-    <result column="channel_value" jdbcType="VARCHAR" property="channelValue" />
     <result column="ways_of_identifying" jdbcType="INTEGER" property="waysOfIdentifying" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="opening_time" jdbcType="TIME" property="openingTime" />
-    <result column="close_time" jdbcType="TIME" property="closeTime" />
     <result column="wifi_id" jdbcType="INTEGER" property="wifiId" />
+    <result column="key_value_id" jdbcType="VARCHAR" property="keyValueId" />
+    <result column="speed_limit" jdbcType="INTEGER" property="speedLimit" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    wifi_properties_id, channel_value, ways_of_identifying, `password`, opening_time, 
-    close_time, wifi_id
+    wifi_properties_id, ways_of_identifying, `password`, wifi_id, key_value_id, speed_limit
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
-    <include refid="Base_Column_List" />
-    from wifi_properties
-    where wifi_properties_id = #{wifiPropertiesId,jdbcType=INTEGER}
+    w.wifi_id,w.lamp_id,w.value_id,wp.key_value_id,wp.wifi_properties_id, wp.ways_of_identifying, wp.password, wp.speed_limit
+    from wifi_properties wp
+    left join wifi w on wp.wifi_id = w.wifi_id
+    where  w.value_id like '%${valueId},%' or '%,${valueId}%'
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <insert id="insert" >
     <!--@mbg.generated-->
-    delete from wifi_properties
-    where wifi_properties_id = #{wifiPropertiesId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="wifi_properties_id" keyProperty="wifiPropertiesId" parameterType="com.vip.wifi.domain.entity.WifiProperties" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into wifi_properties (channel_value, ways_of_identifying, 
-      `password`, opening_time, close_time, 
-      wifi_id)
-    values (#{channelValue,jdbcType=VARCHAR}, #{waysOfIdentifying,jdbcType=INTEGER}, 
-      #{password,jdbcType=VARCHAR}, #{openingTime,jdbcType=TIME}, #{closeTime,jdbcType=TIME}, 
-      #{wifiId,jdbcType=INTEGER})
+    insert into wifi_properties ( wifi_id)
+    values (#{wifiId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" keyColumn="wifi_properties_id" keyProperty="wifiPropertiesId" parameterType="com.vip.wifi.domain.entity.WifiProperties" useGeneratedKeys="true">
-    <!--@mbg.generated-->
-    insert into wifi_properties
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="channelValue != null">
-        channel_value,
-      </if>
-      <if test="waysOfIdentifying != null">
-        ways_of_identifying,
-      </if>
-      <if test="password != null">
-        `password`,
-      </if>
-      <if test="openingTime != null">
-        opening_time,
-      </if>
-      <if test="closeTime != null">
-        close_time,
-      </if>
-      <if test="wifiId != null">
-        wifi_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="channelValue != null">
-        #{channelValue,jdbcType=VARCHAR},
-      </if>
-      <if test="waysOfIdentifying != null">
-        #{waysOfIdentifying,jdbcType=INTEGER},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="openingTime != null">
-        #{openingTime,jdbcType=TIME},
-      </if>
-      <if test="closeTime != null">
-        #{closeTime,jdbcType=TIME},
-      </if>
-      <if test="wifiId != null">
-        #{wifiId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.vip.wifi.domain.entity.WifiProperties">
-    <!--@mbg.generated-->
-    update wifi_properties
-    <set>
-      <if test="channelValue != null">
-        channel_value = #{channelValue,jdbcType=VARCHAR},
-      </if>
-      <if test="waysOfIdentifying != null">
-        ways_of_identifying = #{waysOfIdentifying,jdbcType=INTEGER},
-      </if>
-      <if test="password != null">
-        `password` = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="openingTime != null">
-        opening_time = #{openingTime,jdbcType=TIME},
-      </if>
-      <if test="closeTime != null">
-        close_time = #{closeTime,jdbcType=TIME},
-      </if>
-      <if test="wifiId != null">
-        wifi_id = #{wifiId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where wifi_properties_id = #{wifiPropertiesId,jdbcType=INTEGER}
-  </update>
+
+
   <update id="updateByPrimaryKey" parameterType="com.vip.wifi.domain.entity.WifiProperties">
     <!--@mbg.generated-->
     update wifi_properties
-    set channel_value = #{channelValue,jdbcType=VARCHAR},
-      ways_of_identifying = #{waysOfIdentifying,jdbcType=INTEGER},
+    set ways_of_identifying = #{waysOfIdentifying,jdbcType=INTEGER},
+    <if test="password!=null">
       `password` = #{password,jdbcType=VARCHAR},
-      opening_time = #{openingTime,jdbcType=TIME},
-      close_time = #{closeTime,jdbcType=TIME},
-      wifi_id = #{wifiId,jdbcType=INTEGER}
+    </if>
+      wifi_id = #{wifiId,jdbcType=INTEGER},
+      key_value_id = #{keyValueId,jdbcType=VARCHAR},
+      speed_limit = #{speedLimit,jdbcType=INTEGER}
     where wifi_properties_id = #{wifiPropertiesId,jdbcType=INTEGER}
   </update>
+
 </mapper>

@@ -14,7 +14,7 @@ public class WifiDetails {
 
     /**
     * 1表示正在使用
-      2表示失效
+2表示失效
     */
     private Integer isDelete;
 }
