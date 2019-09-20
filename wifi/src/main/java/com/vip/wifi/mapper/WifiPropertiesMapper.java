@@ -1,13 +1,14 @@
 package com.vip.wifi.mapper;
 
 import com.vip.wifi.domain.entity.WifiProperties;
+import com.vip.wifi.domain.vo.WifiPropertiesVo;
 import org.apache.ibatis.annotations.Param;
 
 public interface WifiPropertiesMapper {
 
     int insert(@Param("wifiId") Integer wifiId);
 
-    WifiProperties selectByPrimaryKey(@Param("lampId") Integer lampId,@Param("wifiId") Integer wifiId,@Param("valueId")String valueId);
+    WifiPropertiesVo selectByPrimaryKey(@Param("wifiId") Integer wifiId);
 
     int updateByPrimaryKey(WifiProperties record);
 

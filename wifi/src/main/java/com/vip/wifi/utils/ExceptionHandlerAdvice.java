@@ -7,6 +7,7 @@ import com.vip.wifi.common.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.ServletException;
@@ -14,7 +15,7 @@ import javax.servlet.ServletException;
 /**
  * @author zhangwei
  */
-@ControllerAdvice
+@RestControllerAdvice
 @Slf4j
 public class ExceptionHandlerAdvice {
     /**
@@ -32,6 +33,4 @@ public class ExceptionHandlerAdvice {
             return ErrorResult.error(ResponseStatus.SYSTEM_UNKNOW_ERROR);
         }
     }
-    
-
 }

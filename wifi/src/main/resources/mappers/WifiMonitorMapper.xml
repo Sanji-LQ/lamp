@@ -8,11 +8,15 @@
     <result column="down_stream_rate" jdbcType="INTEGER" property="downStreamRate" />
     <result column="current_access_quantity" jdbcType="INTEGER" property="currentAccessQuantity" />
     <result column="up_link_rate" jdbcType="INTEGER" property="upLinkRate" />
+    <result column="wifi_id" jdbcType="INTEGER" property="wifiId" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    wm_id, `current_time`, down_stream_rate, current_access_quantity, up_link_rate
+    wm_id, `current_time`, down_stream_rate, current_access_quantity, up_link_rate, wifi_id
   </sql>
+
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
@@ -20,6 +24,9 @@
     from wifi_monitor
     where wm_id = #{wmId,jdbcType=INTEGER}
   </select>
+
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--@mbg.generated-->
     delete from wifi_monitor
@@ -28,9 +35,9 @@
   <insert id="insert" keyColumn="wm_id" keyProperty="wmId" parameterType="com.vip.wifi.domain.entity.WifiMonitor" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into wifi_monitor (`current_time`, down_stream_rate, current_access_quantity, 
-      up_link_rate)
+      up_link_rate, wifi_id)
     values (#{currentTime,jdbcType=TIMESTAMP}, #{downStreamRate,jdbcType=INTEGER}, #{currentAccessQuantity,jdbcType=INTEGER}, 
-      #{upLinkRate,jdbcType=INTEGER})
+      #{upLinkRate,jdbcType=INTEGER}, #{wifiId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="wm_id" keyProperty="wmId" parameterType="com.vip.wifi.domain.entity.WifiMonitor" useGeneratedKeys="true">
     <!--@mbg.generated-->
@@ -48,6 +55,9 @@
       <if test="upLinkRate != null">
         up_link_rate,
       </if>
+      <if test="wifiId != null">
+        wifi_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="currentTime != null">
@@ -61,6 +71,9 @@
       </if>
       <if test="upLinkRate != null">
         #{upLinkRate,jdbcType=INTEGER},
+      </if>
+      <if test="wifiId != null">
+        #{wifiId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -80,6 +93,9 @@
       <if test="upLinkRate != null">
         up_link_rate = #{upLinkRate,jdbcType=INTEGER},
       </if>
+      <if test="wifiId != null">
+        wifi_id = #{wifiId,jdbcType=INTEGER},
+      </if>
     </set>
     where wm_id = #{wmId,jdbcType=INTEGER}
   </update>
@@ -89,7 +105,8 @@
     set `current_time` = #{currentTime,jdbcType=TIMESTAMP},
       down_stream_rate = #{downStreamRate,jdbcType=INTEGER},
       current_access_quantity = #{currentAccessQuantity,jdbcType=INTEGER},
-      up_link_rate = #{upLinkRate,jdbcType=INTEGER}
+      up_link_rate = #{upLinkRate,jdbcType=INTEGER},
+      wifi_id = #{wifiId,jdbcType=INTEGER}
     where wm_id = #{wmId,jdbcType=INTEGER}
   </update>
 </mapper>

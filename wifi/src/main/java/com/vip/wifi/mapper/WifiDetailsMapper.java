@@ -1,6 +1,7 @@
 package com.vip.wifi.mapper;
 
 import com.vip.wifi.domain.entity.WifiDetails;
+import com.vip.wifi.domain.vo.WifiDetailsVo;
 
 public interface WifiDetailsMapper {
     int deleteByPrimaryKey(Integer wdId);
@@ -8,8 +9,8 @@ public interface WifiDetailsMapper {
     int insert(WifiDetails record);
 
     int insertSelective(WifiDetails record);
-
-    WifiDetails selectByPrimaryKey(Integer wdId);
+    //查询详情
+    WifiDetailsVo selectByPrimaryKey(Integer wdId);
 
     int updateByPrimaryKeySelective(WifiDetails record);
 

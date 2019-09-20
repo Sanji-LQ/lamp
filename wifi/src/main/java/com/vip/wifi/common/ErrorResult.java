@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ErrorResult implements Result{
+public class ErrorResult implements Result, Serializable {
     private Integer status;
     private String msg;
 

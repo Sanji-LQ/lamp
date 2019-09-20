@@ -9,17 +9,33 @@
     <result column="wifi_properties_id" jdbcType="INTEGER" property="wifiPropertiesId" />
     <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
   </resultMap>
+
+  <resultMap id="WDMap" type="com.vip.wifi.domain.vo.WifiDetailsVo" extends="BaseResultMap">
+    <association property="wifiMonitor" resultMap="com.vip.wifi.mapper.WifiMonitorMapper.BaseResultMap"/>
+    <association property="wifiPropertiesVo" resultMap="com.vip.wifi.mapper.WifiPropertiesMapper.WifiProMap"/>
+    <association property="wifiVo" resultMap="com.vip.wifi.mapper.WifiMapper.wifiVoMap"/>
+  </resultMap>
+
+
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    wd_id, wifi_id, wm_id, wifi_properties_id, is_delete
+    wd.wd_id, wd.wifi_id, wd.wm_id, wd.wifi_properties_id, wd.is_delete
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="WDMap">
     <!--@mbg.generated-->
     select 
-    <include refid="Base_Column_List" />
-    from wifi_details
-    where wd_id = #{wdId,jdbcType=INTEGER}
+    <include refid="Base_Column_List"></include>
+    from wifi_details wd
+    left join wifi w on wd.wifi_id = w.wifi_id
+    left join wifi_monitor wm on wd.wm_id=wm.wm_id
+    left join wifi_properties wp on wd.wifi_properties_id=wp.wifi_properties_id
+    where wd.wd_id = #{wdId,jdbcType=INTEGER}
+    and wd.is_delete=1
+    and w.wireless_status=1
   </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--@mbg.generated-->
     delete from wifi_details

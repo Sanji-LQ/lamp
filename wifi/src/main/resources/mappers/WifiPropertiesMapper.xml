@@ -10,18 +10,23 @@
     <result column="key_value_id" jdbcType="VARCHAR" property="keyValueId" />
     <result column="speed_limit" jdbcType="INTEGER" property="speedLimit" />
   </resultMap>
+
+  <resultMap id="WifiProMap" type="com.vip.wifi.domain.vo.WifiPropertiesVo" extends="BaseResultMap">
+    <association property="keyTableVoList" resultMap="com.vip.wifi.mapper.KeyTableMapper.SelectValuesMap"/>
+  </resultMap>
+
+
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     wifi_properties_id, ways_of_identifying, `password`, wifi_id, key_value_id, speed_limit
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    <!--@mbg.generated-->
-    select 
-    w.wifi_id,w.lamp_id,w.value_id,wp.key_value_id,wp.wifi_properties_id, wp.ways_of_identifying, wp.password, wp.speed_limit
-    from wifi_properties wp
-    left join wifi w on wp.wifi_id = w.wifi_id
-    where  w.value_id like '%${valueId},%' or '%,${valueId}%'
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="WifiProMap">
+    select
+    <include refid="Base_Column_List" />
+    from wifi_properties
+    where wifi_id = #{wifiId,jdbcType=INTEGER}
   </select>
+
   <insert id="insert" >
     <!--@mbg.generated-->
     insert into wifi_properties ( wifi_id)
@@ -32,14 +37,13 @@
   <update id="updateByPrimaryKey" parameterType="com.vip.wifi.domain.entity.WifiProperties">
     <!--@mbg.generated-->
     update wifi_properties
-    set ways_of_identifying = #{waysOfIdentifying,jdbcType=INTEGER},
+    set
     <if test="password!=null">
       `password` = #{password,jdbcType=VARCHAR},
     </if>
-      wifi_id = #{wifiId,jdbcType=INTEGER},
       key_value_id = #{keyValueId,jdbcType=VARCHAR},
       speed_limit = #{speedLimit,jdbcType=INTEGER}
-    where wifi_properties_id = #{wifiPropertiesId,jdbcType=INTEGER}
+    where wifi_id=#{wifiId}
   </update>
 
 </mapper>
