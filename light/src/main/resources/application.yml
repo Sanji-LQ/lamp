@@ -1,10 +1,32 @@
 spring:
+  #解决日期乱码
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization.write_dates_as_timestamps: false
+    default-property-inclusion: non_null
+    property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      url: jdbc:mysql://localhost:3306/light?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://localhost:3306/light?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
       username: root
       password: 123456
+      initial-size: 5
+      max-active: 20
+      min-idle: 3
 mybatis-plus:
   mapper-locations: classpath:/mappers/**/*.xml
   type-aliases-package: com.vip.light.domain.entity
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: auto
+logging:
+  level:
+    com.vip.light.mapper: trace
+#mybatis:
+#  mapper-locations: classpath:/mappers/**/*.xml
+#  type-aliases-package: com.vip.light.domain.entity
+#  configuration:
+#    map-underscore-to-camel-case: true
